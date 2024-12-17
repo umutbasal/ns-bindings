@@ -3,5 +3,10 @@
 #![allow(non_snake_case)]
 #![allow(improper_ctypes)]
 #![allow(clippy::all)]
+
+mod utils;
+
+pub use utils::*;
+
 #[cfg(target_os = "macos")]
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));

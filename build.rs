@@ -1,3 +1,5 @@
+extern crate bindgen;
+
 use std::env;
 use std::path::PathBuf;
 use std::process::Command;
@@ -11,16 +13,16 @@ fn main() {
         .derive_default(true)
         .derive_debug(true)
         .generate_comments(false)
-		.block_extern_crate(true)
+        .block_extern_crate(true)
         .objc_extern_crate(true)
-        .clang_arg("-ObjC")
+        .clang_arg("-ObjC") // This flag allows linking against Objective-C libraries
         .blocklist_item("objc_object")
         .generate()
         .expect("Failed to generate bindings")
         .write_to_file(out_path.join("bindings.rs"))
         .expect("Failed to write bindings file");
 
-    println!("cargo:rustc-link-lib=framework=NSWorkspace")
+    println!("cargo:rustc-link-lib=framework=AppKit");
 }
 
 /// Execute `xcrun --sdk macosx --show-sdk-path` to locate MacOS SDK
